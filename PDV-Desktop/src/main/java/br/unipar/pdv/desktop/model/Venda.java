@@ -7,6 +7,7 @@ package br.unipar.pdv.desktop.model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,33 +17,34 @@ import lombok.ToString;
 
 /**
  *
- * @author vinid
+ * @author Beatr
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Produto {
+
+public class Venda {
     
-     private long id;
-      private String descricao;
-      private double valor;
-      private String categoria;
+    private long id;
+    private String observacao;
+    private Date data;
+    private double total;
+    private Cliente idCliente;
     
-     public static List<Produto> unmarshalFromJson(String json)
+    public static List<Venda> unmarshalFromJson(String json)
             throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        List<Produto> clienteList = mapper.readValue(json,
-                new TypeReference<List<Produto>>(){});
-        return clienteList;
+        List<Venda> vendaList = mapper.readValue(json,
+                new TypeReference<List<Venda>>(){});
+        return vendaList;
     }
 
-    public static String marshalToJson(Produto produto)
+    public static String marshalToJson(Venda venda)
             throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(produto);
+        return mapper.writeValueAsString(venda);
     }
-      
-       
+    
 }

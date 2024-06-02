@@ -16,33 +16,35 @@ import lombok.ToString;
 
 /**
  *
- * @author vinid
+ * @author Beatr
  */
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Produto {
+
+public class ItemVenda {
     
-     private long id;
-      private String descricao;
-      private double valor;
-      private String categoria;
+    private long id;
+    private int quantidade;
+    private double valorUnitario;
+    private double valorTotal;
+    private Venda idVenda;
+    private Produto idProduto;
     
-     public static List<Produto> unmarshalFromJson(String json)
+    public static List<ItemVenda> unmarshalFromJson(String json)
             throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        List<Produto> clienteList = mapper.readValue(json,
-                new TypeReference<List<Produto>>(){});
-        return clienteList;
+        List<ItemVenda> itemVendaList = mapper.readValue(json,
+                new TypeReference<List<ItemVenda>>(){});
+        return itemVendaList;
     }
 
-    public static String marshalToJson(Produto produto)
+    public static String marshalToJson(ItemVenda itemVenda)
             throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(produto);
+        return mapper.writeValueAsString(itemVenda);
     }
-      
-       
 }

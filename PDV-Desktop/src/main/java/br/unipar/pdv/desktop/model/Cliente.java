@@ -30,7 +30,7 @@ public class Cliente {
     private String telefone;
     private String email;
     
-     public static List<Cliente> unmarshalFromJson(String json)
+    public static List<Cliente> unmarshalFromJson(String json)
             throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         List<Cliente> clienteList = mapper.readValue(json,

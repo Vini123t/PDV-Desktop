@@ -4,6 +4,9 @@
  */
 package br.unipar.pdv.desktop.telas;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author Beatr
@@ -15,6 +18,7 @@ public class VendaPanel extends javax.swing.JPanel {
      */
     public VendaPanel() {
         initComponents();
+        exibirData();
     }
 
     /**
@@ -217,7 +221,7 @@ public class VendaPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btSelecionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarProdutoActionPerformed
-
+        abrirTelaProduto();
     }//GEN-LAST:event_btSelecionarProdutoActionPerformed
 
     private void dataFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataFieldActionPerformed
@@ -255,5 +259,17 @@ public class VendaPanel extends javax.swing.JPanel {
         ClienteFrame clienteFrame = new ClienteFrame();
         clienteFrame.setVisible(true);
     }
-
+    
+    private void abrirTelaProduto() {
+        Produtolist produtolist = new Produtolist();
+        produtolist.setVisible(true);
+    }
+    
+    private void exibirData() {
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dateString = dateFormat.format(date);
+        dataField.setText(dateString);
+    }
+    
 }

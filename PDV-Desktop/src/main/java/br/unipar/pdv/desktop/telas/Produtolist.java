@@ -4,6 +4,8 @@
  */
 package br.unipar.pdv.desktop.telas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author vinid
@@ -205,8 +207,6 @@ public class Produtolist extends javax.swing.JFrame {
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
 
-   
-
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void btnSelecionar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionar2ActionPerformed
@@ -276,4 +276,6 @@ public class Produtolist extends javax.swing.JFrame {
     private javax.swing.JTextField txtPesquisar1;
     private javax.swing.JTextField txtPesquisar2;
     // End of variables declaration//GEN-END:variables
+
+    
 }

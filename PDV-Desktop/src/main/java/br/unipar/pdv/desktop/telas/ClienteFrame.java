@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,11 +19,13 @@ import java.util.List;
  */
 public class ClienteFrame extends javax.swing.JFrame {
 
+    private VendaPanel vendaPanel;
     /**
      * Creates new form ClienteFrame
      */
     public ClienteFrame() {
         initComponents();
+        exibirClientes();
     }
 
     /**
@@ -49,7 +53,7 @@ public class ClienteFrame extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Id", "Nome", "CPF", "Telefone"
+                "Id", "Nome", "Telefone", "Email"
             }
         ) {
             Class[] types = new Class [] {
@@ -121,7 +125,7 @@ public class ClienteFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSelecionar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionar1ActionPerformed
-        selecionarCliente();
+        selecionarCliente(vendaPanel);
     }//GEN-LAST:event_btSelecionar1ActionPerformed
 
     private void btCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelar1ActionPerformed
@@ -171,7 +175,7 @@ public class ClienteFrame extends javax.swing.JFrame {
     private javax.swing.JTable tbClientes;
     // End of variables declaration//GEN-END:variables
 
-    private void selecionarCliente() {
+    private void exibirClientes() {
           try {
             URL url = new URL("http://localhost:8080/cliente/all");
             HttpURLConnection connection =
@@ -188,10 +192,15 @@ public class ClienteFrame extends javax.swing.JFrame {
 
             in.close();
             List<Cliente> clienteList = Cliente.unmarshalFromJson(result);
+            DefaultTableModel model = new DefaultTableModel(new Object[]{"ID", 
+                "Nome","Telefone", "Email"}, 0);
 
             for (Cliente cliente : clienteList) {
-                System.out.println(cliente.toString());
+                 model.addRow(new Object[]{cliente.getId(), cliente.getNome(), 
+                     cliente.getTelefone(), cliente.getEmail()});
             }
+            
+            tbClientes.setModel(model);
 
             int code = connection.getResponseCode();
             System.out.println("Response code: " + code);
@@ -199,6 +208,27 @@ public class ClienteFrame extends javax.swing.JFrame {
             connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void selecionarCliente(VendaPanel vendaPanel) {
+        int selectedRow = tbClientes.getSelectedRow();
+        
+        if (selectedRow != -1) {
+            int clienteId = (int) tbClientes.getValueAt(selectedRow, 0);
+            String clienteNome = (String) tbClientes.getValueAt(selectedRow, 1);
+            String clienteTelefone = (String) tbClientes.getValueAt(selectedRow, 2);
+            String clienteEmail = (String) tbClientes.getValueAt(selectedRow, 3);
+            
+            System.out.println("Cliente selecionado: ID=" + clienteId + 
+                    ", Nome=" + clienteNome + 
+                    ", Telefone=" + clienteTelefone + 
+                    ", Email=" + clienteEmail);
+            
+             vendaPanel.setClienteInfo(clienteNome);
+             
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum cliente selecionado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

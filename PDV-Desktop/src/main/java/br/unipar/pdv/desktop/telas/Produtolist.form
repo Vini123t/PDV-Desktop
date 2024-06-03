@@ -202,7 +202,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btAdicionar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Selecionar"/>
+        <Property name="text" type="java.lang.String" value="Adicinar"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>

@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class Produtolist extends javax.swing.JFrame {
 
     private List<Produto> listaProduto;
-    
+    private VendaPanel vendaPanel;
     /**
      * Creates new form Produtolist
      */
@@ -116,7 +116,7 @@ public class Produtolist extends javax.swing.JFrame {
             }
         });
 
-        btAdicionar.setText("Selecionar");
+        btAdicionar.setText("Adicinar");
         btAdicionar.setToolTipText("");
         btAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -279,8 +279,7 @@ public class Produtolist extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
-
- 
+//        adicionarProduto();
     }//GEN-LAST:event_btAdicionarActionPerformed
 
     private void cbProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProdutoActionPerformed
@@ -423,13 +422,27 @@ public class Produtolist extends javax.swing.JFrame {
         }catch(NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Certifique-se de preencher "
                     + "os campos corretamente.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        
-        
-        
+        }  
     }
-    
-    
-    
-    
+
+    public void setVendaPanel(VendaPanel vendaPanel) {
+        this.vendaPanel = vendaPanel;
+    }
+
+//    private void adicionarProduto() {
+//        int selectedIndex = cbProduto.getSelectedIndex();
+//        if (selectedIndex >= 0) {
+//            Produto produtoSelecionado = listaProduto.get(selectedIndex);
+//            String codigo = lbCodigo.getText();
+//            String descricao = produtoSelecionado.getDescricao();
+//            String categoria = lbCategoria.getText();
+//            String valorUnitario = lbVlUnitario.getText();
+//            String quantidade = txfQuantidade.getText();
+//            String valorTotal = lbVlTotal.getText();
+//
+//            vendaPanel.adicionarProduto(codigo, descricao, categoria, 
+//                    valorUnitario, quantidade, valorTotal);
+//        }
+//    }
+
 }

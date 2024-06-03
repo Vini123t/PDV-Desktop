@@ -5,13 +5,17 @@
 package br.unipar.pdv.desktop.telas;
 
 import br.unipar.pdv.desktop.model.Cliente;
+import br.unipar.pdv.desktop.model.Produto;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,6 +23,7 @@ import java.util.List;
  */
 public class VendaPanel extends javax.swing.JPanel {
 
+    private List<Produto> listaProduto;
     /**
      * Creates new form VendaPanel
      */
@@ -26,6 +31,8 @@ public class VendaPanel extends javax.swing.JPanel {
         initComponents();
         exibirData();
         exibirListaCliente();
+        exibirListaProduto();
+//        valorTotal();
     }
 
     /**
@@ -51,6 +58,9 @@ public class VendaPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         dataField = new javax.swing.JTextField();
         cbCliente = new javax.swing.JComboBox<>();
+        cbProduto = new javax.swing.JComboBox<>();
+        txfQuantidade = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 48)); // NOI18N
         jLabel1.setText("Venda");
@@ -122,6 +132,12 @@ public class VendaPanel extends javax.swing.JPanel {
 
         cbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        cbProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        txfQuantidade.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel3.setText("Quantidade:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -154,6 +170,12 @@ public class VendaPanel extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txfQuantidade)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btSelecionarProduto)))))
                 .addGap(0, 33, Short.MAX_VALUE))
         );
@@ -174,10 +196,13 @@ public class VendaPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(btSelecionarProduto))
+                            .addComponent(btSelecionarProduto)
+                            .addComponent(cbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(txfQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(63, Short.MAX_VALUE))
+                        .addGap(63, 63, 63))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -213,8 +238,7 @@ public class VendaPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btSelecionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarProdutoActionPerformed
-        System.out.println("Botão Selecionar Produto clicado"); 
-        abrirTelaProduto();
+        adicionarProduto();
     }//GEN-LAST:event_btSelecionarProdutoActionPerformed
 
     private void dataFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataFieldActionPerformed
@@ -231,23 +255,20 @@ public class VendaPanel extends javax.swing.JPanel {
     private javax.swing.JButton btFinalizar;
     private javax.swing.JButton btSelecionarProduto;
     private javax.swing.JComboBox<String> cbCliente;
+    private javax.swing.JComboBox<String> cbProduto;
     private javax.swing.JTextField dataField;
     private javax.swing.JTextField exibirValorTotal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaProdutos;
+    private javax.swing.JTextField txfQuantidade;
     // End of variables declaration//GEN-END:variables
-
-    private void abrirTelaProduto() {
-        System.out.println("Método abrirTelaProduto chamado");
-        Produtolist produtolist = new Produtolist();
-        produtolist.setVisible(true);
-    } 
     
     private void exibirData() {
         Date date = new Date();
@@ -287,4 +308,76 @@ public class VendaPanel extends javax.swing.JPanel {
         }
     }
     
+    private void exibirListaProduto() {
+        try {
+            URL url = new URL("http://localhost:8080/produto/all");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+            String inputLine;
+            StringBuilder result = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                result.append(inputLine);
+            }
+
+            in.close();
+            listaProduto = Produto.unmarshalFromJson(result.toString());
+
+            cbProduto.removeAllItems();
+
+            for (Produto produto : listaProduto) {
+                cbProduto.addItem(produto.getDescricao());
+            }
+
+            int code = connection.getResponseCode();
+            System.out.println("Response code: " + code);
+
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private double calcularTotal() {
+        double total = 0.0;
+        DefaultTableModel model = (DefaultTableModel) tabelaProdutos.getModel();
+        int rowCount = model.getRowCount();
+        for (int i = 0; i < rowCount; i++) {
+            Object valorTotalObj = model.getValueAt(i, 4);
+            if (valorTotalObj != null) {
+                double valorTotal = (double) valorTotalObj;
+                total += valorTotal;
+            }
+        }
+        return total;
+    }
+    
+    private void adicionarProduto() {
+        Produto produtoSelecionado = listaProduto.get(cbProduto.getSelectedIndex());
+
+        long codigo = produtoSelecionado.getId();
+        String descricao = produtoSelecionado.getDescricao();
+        double valorUnitario = produtoSelecionado.getValor();
+        
+        int quantidade = 0;
+        try {
+            quantidade = Integer.parseInt(txfQuantidade.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Quantidade inválida", "Erro", 
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        double valorTotal = valorUnitario * quantidade;
+
+        DefaultTableModel model = (DefaultTableModel) tabelaProdutos.getModel();
+        model.addRow(new Object[]{codigo, descricao, quantidade, valorUnitario, valorTotal});
+        
+        double total = calcularTotal();
+        DecimalFormat df = new DecimalFormat("#.##");
+        exibirValorTotal.setText(df.format(total));
+        
+    }
+
 }

@@ -4,8 +4,14 @@
  */
 package br.unipar.pdv.desktop.telas;
 
+import br.unipar.pdv.desktop.model.Cliente;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -19,6 +25,7 @@ public class VendaPanel extends javax.swing.JPanel {
     public VendaPanel() {
         initComponents();
         exibirData();
+        exibirListaCliente();
     }
 
     /**
@@ -35,8 +42,6 @@ public class VendaPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaProdutos = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        campoCliente = new javax.swing.JTextField();
-        btPesquisarCliente = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         exibirValorTotal = new javax.swing.JTextField();
@@ -45,6 +50,7 @@ public class VendaPanel extends javax.swing.JPanel {
         btSelecionarProduto = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         dataField = new javax.swing.JTextField();
+        cbCliente = new javax.swing.JComboBox<>();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 48)); // NOI18N
         jLabel1.setText("Venda");
@@ -57,11 +63,11 @@ public class VendaPanel extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Descrição", "Qtd", "Vl. Un.", "Desc. Un.", "Vl. Total"
+                "Código", "Descrição", "Qtd", "Vl. Un.", "Vl. Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Long.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -71,13 +77,6 @@ public class VendaPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tabelaProdutos);
 
         jLabel4.setText("Cliente:");
-
-        btPesquisarCliente.setText("Pesquisar");
-        btPesquisarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPesquisarClienteActionPerformed(evt);
-            }
-        });
 
         jLabel5.setText("Produto:");
 
@@ -121,6 +120,8 @@ public class VendaPanel extends javax.swing.JPanel {
             }
         });
 
+        cbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -139,17 +140,9 @@ public class VendaPanel extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btSelecionarProduto))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(campoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btPesquisarCliente))
+                                .addComponent(cbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -157,7 +150,11 @@ public class VendaPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btCancelar)
                                 .addGap(18, 18, 18)
-                                .addComponent(btFinalizar)))))
+                                .addComponent(btFinalizar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btSelecionarProduto)))))
                 .addGap(0, 33, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -171,8 +168,7 @@ public class VendaPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(campoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btPesquisarCliente))
+                    .addComponent(cbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -208,10 +204,6 @@ public class VendaPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btPesquisarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarClienteActionPerformed
-        abrirTelaCliente();
-    }//GEN-LAST:event_btPesquisarClienteActionPerformed
-
     private void btFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarActionPerformed
 
     }//GEN-LAST:event_btFinalizarActionPerformed
@@ -221,6 +213,7 @@ public class VendaPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btSelecionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarProdutoActionPerformed
+        System.out.println("Botão Selecionar Produto clicado"); 
         abrirTelaProduto();
     }//GEN-LAST:event_btSelecionarProdutoActionPerformed
 
@@ -236,9 +229,8 @@ public class VendaPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btFinalizar;
-    private javax.swing.JButton btPesquisarCliente;
     private javax.swing.JButton btSelecionarProduto;
-    private javax.swing.JTextField campoCliente;
+    private javax.swing.JComboBox<String> cbCliente;
     private javax.swing.JTextField dataField;
     private javax.swing.JTextField exibirValorTotal;
     private javax.swing.JLabel jLabel1;
@@ -251,25 +243,48 @@ public class VendaPanel extends javax.swing.JPanel {
     private javax.swing.JTable tabelaProdutos;
     // End of variables declaration//GEN-END:variables
 
-    public void setClienteInfo(String nome) {
-        campoCliente.setText(nome);
-    }
-
-    private void abrirTelaCliente() {
-        ClienteFrame clienteFrame = new ClienteFrame();
-        clienteFrame.setVisible(true);
-    }
-    
     private void abrirTelaProduto() {
+        System.out.println("Método abrirTelaProduto chamado");
         Produtolist produtolist = new Produtolist();
         produtolist.setVisible(true);
-    }
+    } 
     
     private void exibirData() {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String dateString = dateFormat.format(date);
         dataField.setText(dateString);
+    }
+
+    private void exibirListaCliente() {
+        try {
+            URL url = new URL("http://localhost:8080/cliente/all");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+            String inputLine;
+            StringBuilder result = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                result.append(inputLine);
+            }
+
+            in.close();
+            List<Cliente> clienteList = Cliente.unmarshalFromJson(result.toString());
+
+            cbCliente.removeAllItems();
+
+            for (Cliente cliente : clienteList) {
+                cbCliente.addItem(cliente.getNome());
+            }
+
+            int code = connection.getResponseCode();
+            System.out.println("Response code: " + code);
+
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }

@@ -25,17 +25,17 @@ import lombok.ToString;
 @ToString
 public class Produto {
     
-     private long id;
-      private String descricao;
-      private double valor;
-      private String categoria;
+    private long id;
+    private String descricao;
+    private double valor;
+    private String categoria;
     
-     public static List<Produto> unmarshalFromJson(String json)
+    public static List<Produto> unmarshalFromJson(String json)
             throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        List<Produto> clienteList = mapper.readValue(json,
+        List<Produto> produtolist = mapper.readValue(json,
                 new TypeReference<List<Produto>>(){});
-        return clienteList;
+        return produtolist;
     }
 
     public static String marshalToJson(Produto produto)

@@ -7,6 +7,7 @@ package br.unipar.pdv.desktop.model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,8 @@ public class Venda {
     private String observacao;
     private Date data;
     private double total;
-    private Cliente idCliente;
+    private Cliente cliente;
+    private List<ItemVenda> itens = new ArrayList<>();
     
     public static List<Venda> unmarshalFromJson(String json)
             throws JsonProcessingException {

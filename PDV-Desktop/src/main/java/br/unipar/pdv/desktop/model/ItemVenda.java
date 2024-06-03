@@ -31,8 +31,6 @@ public class ItemVenda {
     private int quantidade;
     private double valorUnitario;
     private double valorTotal;
-    private Venda idVenda;
-    private Produto idProduto;
     
     public static List<ItemVenda> unmarshalFromJson(String json)
             throws JsonProcessingException {

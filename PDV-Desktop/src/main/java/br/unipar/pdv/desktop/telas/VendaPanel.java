@@ -9,6 +9,9 @@ import br.unipar.pdv.desktop.model.ItemVenda;
 import br.unipar.pdv.desktop.model.Produto;
 import br.unipar.pdv.desktop.model.Venda;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -339,6 +342,7 @@ public class VendaPanel extends javax.swing.JPanel {
 
             int code = connection.getResponseCode();
             System.out.println("Response code: " + code);
+            registroLog("Obtenção de clientes", "Sucesso. Response code: " + code);
 
             connection.disconnect();
         } catch (Exception e) {
@@ -370,6 +374,7 @@ public class VendaPanel extends javax.swing.JPanel {
 
             int code = connection.getResponseCode();
             System.out.println("Response code: " + code);
+            registroLog("Obtenção de produtos", "Sucesso. Response code: " + code);
 
             connection.disconnect();
         } catch (Exception e) {
@@ -417,10 +422,22 @@ public class VendaPanel extends javax.swing.JPanel {
         exibirValorTotal.setText(df.format(total));
         
     }
+    
+    private void registroLog(String status, String tipo) {
+         try (BufferedWriter writer = new BufferedWriter(new FileWriter("registros_log.txt", true))) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dataHora = dateFormat.format(new Date());
+            writer.write(dataHora + " - " + tipo + " - " + status);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void apagarDados() {
         exibirValorTotal.setText("");
         txfQuantidade.setText("");
+        txfObservacao.setText("");
         
         DefaultTableModel model = (DefaultTableModel) tabelaProdutos.getModel();
         model.setRowCount(0);

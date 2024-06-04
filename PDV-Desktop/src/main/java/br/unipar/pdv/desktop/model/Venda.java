@@ -48,5 +48,5 @@ public class Venda {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(venda);
     }
-    
+     
 }

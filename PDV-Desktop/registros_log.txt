@@ -1,2 +1,6 @@
 2024-06-04 20:49:13 - Sucesso. Response code: 200 - Obtenção de clientes
 2024-06-04 20:49:13 - Sucesso. Response code: 200 - Obtenção de produtos
+2024-06-04 20:59:09 - Sucesso. Response code: 200 - Obtenção de clientes
+2024-06-04 20:59:09 - Sucesso. Response code: 200 - Obtenção de produtos
+2024-06-04 21:19:27 - Sucesso. Response code: 200 - Obtenção de clientes
+2024-06-04 21:19:27 - Sucesso. Response code: 200 - Obtenção de produtos

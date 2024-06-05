@@ -44,5 +44,9 @@ public class Produto {
         return mapper.writeValueAsString(produto);
     }
       
+    public static Produto unmarshalFromJsonFind(String json) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(json, Produto.class);
+    }
        
 }

@@ -29,7 +29,13 @@ public class Cliente {
     private String nome;
     private String telefone;
     private String email;
-    
+
+    public Cliente(String nome, String telefone, String email) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+    }
+  
     public static List<Cliente> unmarshalFromJson(String json)
             throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -42,6 +48,11 @@ public class Cliente {
             throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(cliente);
+    }
+    
+    public static Cliente unmarshalFromJsonFind(String json) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(json, Cliente.class);
     }
     
 }

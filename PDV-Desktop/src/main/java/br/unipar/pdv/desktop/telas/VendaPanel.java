@@ -600,7 +600,7 @@ public class VendaPanel extends javax.swing.JPanel {
         }
        
     }
-    private void refreshListas(){
+      private void refreshListas(){
         // Atualizar automaticamente os clientes e produtos a cada 5 minutos
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -612,6 +612,7 @@ public class VendaPanel extends javax.swing.JPanel {
         }, 0, 5 * 60 * 1000); // Atualiza a cada 5 minutos (5 * 60 * 1000 ms)
 
     }
+  
       private void limparFormulario() {
         lbIdVenda.setText("");
         cbCliente.setSelectedIndex(0);

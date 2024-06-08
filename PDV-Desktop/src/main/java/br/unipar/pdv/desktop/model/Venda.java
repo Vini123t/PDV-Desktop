@@ -4,9 +4,12 @@
  */
 package br.unipar.pdv.desktop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +29,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 
-public class Venda {
+public class Venda implements Serializable{
     
     private long id;
     private String observacao;
@@ -35,12 +38,17 @@ public class Venda {
     private Cliente cliente;
     private List<ItemVenda> itens = new ArrayList<>();
     
-    public static List<Venda> unmarshalFromJson(String json)
-            throws JsonProcessingException {
+//    public static List<Venda> unmarshalFromJson(String json)
+//            throws JsonProcessingException {
+//        ObjectMapper mapper = new ObjectMapper();
+//        List<Venda> vendaList = mapper.readValue(json,
+//                new TypeReference<List<Venda>>(){});
+//        return vendaList;
+//    }
+    
+    public static Venda unmarshalFromJson(String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        List<Venda> vendaList = mapper.readValue(json,
-                new TypeReference<List<Venda>>(){});
-        return vendaList;
+        return mapper.readValue(json, Venda.class);
     }
 
     public static String marshalToJson(Venda venda)

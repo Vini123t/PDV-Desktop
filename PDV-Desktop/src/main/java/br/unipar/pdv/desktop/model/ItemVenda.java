@@ -4,9 +4,12 @@
  */
 package br.unipar.pdv.desktop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.Serializable;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,12 +28,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 
-public class ItemVenda {
+public class ItemVenda implements Serializable{
     
     private long id;
     private int quantidade;
     private double valorUnitario;
     private double valorTotal;
+    private Produto produto;
+    
+    @JsonIgnore 
+    private Venda vendaId;
     
     public static List<ItemVenda> unmarshalFromJson(String json)
             throws JsonProcessingException {
